@@ -2,12 +2,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Estate tutorial"
+    _order = "id desc"
 
     name = fields.Char(required=True)
     description = fields.Text()
@@ -25,12 +26,25 @@ class EstateProperty(models.Model):
     garden_orientation = fields.Selection([("north", "North")])
     garden_area = fields.Integer()
     active = fields.Boolean(default=True, label='Ativo')
-    state = fields.Selection([("new", "New"), ("offer_r", "Offer Received"), ("offer_a", "Offer Accepted"), ("sold", "Sold"), ("canceled", "Canceled")])
+    state = fields.Selection([("new", "New"), ("offer_r", "Offer Received"), ("offer_a", "Offer Accepted"), ("sold", "Sold"), ("canceled", "Canceled")], default="new")
     salesperson = fields.Many2one('res.users', string='Salesperson')
     buyer = fields.Many2one('res.partner', string='Buyer', readonly=True, copy=False)
     offers_id = fields.One2many('estate.property.offers', 'property_id', string='Offers')
     total_area = fields.Float(compute="_compute_total")
     best_price = fields.Float(compute="_compute_best_price")
+    _sql_constraints = [
+        ('check_expected_price', 'CHECK(expected_price > 0)',
+         'The Expected Price must be positive.'),
+    ]
+    # status = fields.Selection([("accepted", "Accepted"), ("refused", "Refused")], copy=False)
+
+    def offer_received(self):
+        new_state = ' '
+        for record in self:
+            record.state = 'offer_r'
+            new_state = record.state
+        self.state = new_state
+        return self.state
 
     def property_cancel(self):
         for record in self:
@@ -45,6 +59,14 @@ class EstateProperty(models.Model):
                 raise UserError('Cancelled property cannot be sold')
             else:
                 record.state = 'sold'
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if "offers_id" in vals:
+                vals["state"] = "offer_r"
+        res = super().create(vals_list)
+        return res
 
     @api.depends("living_areas", "garden_area")
     def _compute_total(self):
@@ -66,3 +88,9 @@ class EstateProperty(models.Model):
             self.garden_orientation = False
             self.garden_area = ''
 
+    # @api.constrains('offers_id')
+    # def _check_selling_price(self):
+    #     for record in self:
+    #         if record.offers_id.price < 0.9 * record.expected_price:
+    #             print(record.offers_id.price)
+    #             raise ValidationError("The Selling Price must be more than 90% of expected price")

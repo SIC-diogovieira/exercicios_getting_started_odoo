@@ -7,7 +7,6 @@
             <field name="res_model">estate.property.offers</field>
             <field name="view_mode">tree</field>
         </record>
-
         <record id="view_delivery_carrier_search" model="ir.ui.view">
             <field name="name">estate.property.offers.search</field>
             <field name="model">estate.property.offers</field>
@@ -18,18 +17,20 @@
             </field>
         </record>
 
-        <record id="estate_property_view_tree" model="ir.ui.view">
+        <record id="estate_property_view_tree_offer" model="ir.ui.view">
         <field name="name">estate.property.offers.tree</field>
         <field name="model">estate.property.offers</field>
         <field name="arch" type="xml">
-            <tree string="Propriedades">
+            <tree string="Propriedades" editable="bottom" decoration-danger="status in ('refused')" decoration-success="status in ('accepted')">
+                <field name="property_id"/>
                 <field name="price"/>
                 <field name="partner_id"/>
-                <field name="validity"/>
+                <field name="validity" optional="hide"/>
                 <field name="date_deadline"/>
-                <button name="offer_accept" string="Accept" type="object" icon="fa-check"/>
-                <button name="offer_refuse" string="Refuse" type="object" icon="fa-level-down"/>
-                <field name="status"/>
+                <button name="offer_accept" string="Accept" type="object" icon="fa-check" attrs="{'invisible': [('price', '=', False)]}"/>
+                <button name="offer_refuse" string="Refuse" type="object" icon="fa-level-down" attrs="{'invisible': [('price', '=', False)]}"/>
+<!--                <field name="property_type_ids"/>-->
+                <field name="status" optional="hide"/>
             </tree>
         </field>
         </record>

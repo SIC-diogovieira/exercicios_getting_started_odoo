@@ -18,11 +18,11 @@
             </field>
         </record>
 
-        <record id="estate_property_view_tree" model="ir.ui.view">
+        <record id="estate_property_view_tree_tags" model="ir.ui.view">
         <field name="name">estate.property.tags.tree</field>
         <field name="model">estate.property.tags</field>
         <field name="arch" type="xml">
-            <tree string="Propriedades">
+            <tree string="Propriedades" editable="bottom">
                 <field name="name"/>
             </tree>
         </field>
