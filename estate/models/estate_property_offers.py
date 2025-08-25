@@ -44,12 +44,16 @@ class EstatePropertyOffer(models.Model):
                 record.property_id.buyer = ''
                 record.property_id.state = 'offer_r'
 
-    def write(self, vals):
-        if "price" in vals:
-            if self.property_id:
-                self.property_id.state = 'offer_r'
-        res = super().write(vals)
-        return res
+    @api.constrains("price")
+    def price_check(self):
+        if self.property_id and self.property_id.offers_id:
+            max_offer = max(self.property_id.offers_id.mapped("price"))
+            print(max_offer)
+            if self.price < max_offer:
+                print(self.price)
+                raise UserError('This price is lower than others')
+            else:
+                return self.price
 
     @api.depends("validity", "date_deadline", "create_date")
     def _compute_date(self):

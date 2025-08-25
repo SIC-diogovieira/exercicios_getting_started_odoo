@@ -10,6 +10,6 @@ class EstatePropertyTag(models.Model):
     _order = "name asc"
 
     name = fields.Char(required=True)
-    tags_ids = fields.One2many('estate.property','property_tag_id', string='Propertys')
+    tags_ids = fields.One2many('estate.property', 'property_tag_id', string='Propertys')
     color = fields.Integer("Color Index", default=0)
 

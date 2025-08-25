@@ -2,12 +2,14 @@
 <odoo>
     <data>
 
+        <!-- Ação principal para tipos de propriedade -->
         <record id="estate_types_action" model="ir.actions.act_window">
             <field name="name">Types</field>
             <field name="res_model">estate.property.type</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban</field>
         </record>
 
+        <!-- Ação para ofertas filtradas -->
         <record id="estate_types_action_filtered" model="ir.actions.act_window">
             <field name="name">Types</field>
             <field name="res_model">estate.property.offers</field>
@@ -15,32 +17,37 @@
             <field name="domain">[('property_type_id', '=', active_id)]</field>
         </record>
 
+        <!-- Formulário de tipos de propriedade -->
         <record id="estate_property_type_view_form" model="ir.ui.view">
-        <field name="name">estate.property.type.form</field>
-        <field name="model">estate.property.type</field>
-        <field name="arch" type="xml">
-            <form string="Propriedades">
-                <div class="oe_button_box" name="button_box">
-                    <button name="%(estate.estate_types_action_filtered)d" type="action" class="oe_stat_button" icon="fa-pencil-square-o">
-                        <field name="offer_ids" invisible="1"/>
-                        <field name="property_id" invisible="1"/>
-                        <field name="offers_count" widget="statinfo" string="Offers"/>
-                    </button>
-                </div>
-                <h1>
-                    <field name="name"/>
-                </h1>
-                <field name="property_ids">
-                    <tree string="Types">
+            <field name="name">estate.property.type.form</field>
+            <field name="model">estate.property.type</field>
+            <field name="arch" type="xml">
+                <form string="Propriedades">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(estate.estate_types_action_filtered)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                            <field name="offer_ids" invisible="1"/>
+                            <field name="property_id" invisible="1"/>
+                            <field name="offers_count" widget="statinfo" string="Offers"/>
+                        </button>
+                    </div>
+                    <h1>
                         <field name="name"/>
-                        <field name="expected_price"/>
-                        <field name="state"/>
-                    </tree>
-                </field>
-            </form>
-        </field>
+                    </h1>
+                    <field name="property_ids">
+                        <tree string="Types">
+                            <field name="name"/>
+                            <field name="expected_price"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
         </record>
 
+        <!-- Pesquisa para tipos de propriedade -->
         <record id="view_delivery_carrier_search" model="ir.ui.view">
             <field name="name">estate.property.type.search</field>
             <field name="model">estate.property.type</field>
@@ -51,19 +58,38 @@
             </field>
         </record>
 
+        <!-- Lista de tipos de propriedade -->
         <record id="estate_property_view_tree_type" model="ir.ui.view">
-        <field name="name">estate.property.type.tree</field>
-        <field name="model">estate.property.type</field>
-        <field name="arch" type="xml">
-            <tree string="Propriedades">
-                <field name="sequence" widget="handle"/>
-                <field name="name"/>
-<!--                <field name="offers_ids"/>-->
-<!--                <field name="offer_count"/>-->
-            </tree>
-        </field>
+            <field name="name">estate.property.type.tree</field>
+            <field name="model">estate.property.type</field>
+            <field name="arch" type="xml">
+                <tree string="Propriedades">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <!-- <field name="offers_ids"/> -->
+                    <!-- <field name="offer_count"/> -->
+                </tree>
+            </field>
         </record>
 
+        <!-- Vista Kanban de tipos de propriedade -->
+        <record id="estate_property_view_kanban_type" model="ir.ui.view">
+            <field name="name">estate.property.type.kanban</field>
+            <field name="model">estate.property.type</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="name">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
 
     </data>
 </odoo>

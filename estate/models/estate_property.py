@@ -60,6 +60,14 @@ class EstateProperty(models.Model):
             else:
                 record.state = 'sold'
 
+    @api.ondelete(at_uninstall=False)
+    def prevent_delete(self):
+        if self.state == "new" or self.state == "canceled":
+            return self.state
+        else:
+            raise UserError('This property cannot be cancelled')
+
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:

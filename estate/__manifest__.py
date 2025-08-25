@@ -8,12 +8,13 @@
     """,
 
     'version': '0.1',
-    'depends': ['web',"base","sale","sale_management","stock","mrp","purchase", "contacts","purchase_stock"],
+    'depends': ['web',"base","sale","sale_management","stock","mrp","purchase", "contacts","purchase_stock", "estate",],
     'data': ['Security/ir.model.access.csv',
              'Views/estate_property_views.xml',
              'Views/estate_property_type_views.xml',
              'Views/estate_property_tags_views.xml',
              'Views/estate_property_offers_views.xml',
+             'Views/estate_property_inherited_views.xml',
              'Views/estate_menus.xml'],
     'license': 'AGPL-3'
 }

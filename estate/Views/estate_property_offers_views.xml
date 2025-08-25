@@ -22,7 +22,6 @@
         <field name="model">estate.property.offers</field>
         <field name="arch" type="xml">
             <tree string="Propriedades" editable="bottom" decoration-danger="status in ('refused')" decoration-success="status in ('accepted')">
-                <field name="property_id"/>
                 <field name="price"/>
                 <field name="partner_id"/>
                 <field name="validity" optional="hide"/>
