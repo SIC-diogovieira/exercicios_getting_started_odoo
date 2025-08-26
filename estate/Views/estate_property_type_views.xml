@@ -72,24 +72,6 @@
             </field>
         </record>
 
-        <!-- Vista Kanban de tipos de propriedade -->
-        <record id="estate_property_view_kanban_type" model="ir.ui.view">
-            <field name="name">estate.property.type.kanban</field>
-            <field name="model">estate.property.type</field>
-            <field name="arch" type="xml">
-                <kanban default_group_by="name">
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click">
-                                <strong>
-                                    <field name="name"/>
-                                </strong>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
 
     </data>
 </odoo>

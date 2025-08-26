@@ -8,7 +8,7 @@
     """,
 
     'version': '0.1',
-    'depends': ['web',"base","sale","sale_management","stock","mrp","purchase", "contacts","purchase_stock", "estate",],
+    'depends': ['web',"base","sale","sale_management","stock","mrp","purchase", "contacts","purchase_stock",],
     'data': ['Security/ir.model.access.csv',
              'Views/estate_property_views.xml',
              'Views/estate_property_type_views.xml',

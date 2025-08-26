@@ -5,7 +5,7 @@
         <record id="estate_property_action" model="ir.actions.act_window">
             <field name="name">Propriedades</field>
             <field name="res_model">estate.property</field>
-            <field name="view_mode">tree,form,search</field>
+            <field name="view_mode">tree,form,search,kanban</field>
             <field name="context">{'search_default_property_id': True, 'default_property_id': True}</field>
         </record>
 
@@ -98,6 +98,36 @@
                 </sheet>
                </form>
         </field>
+        </record>
+
+         <record id="estate_property_view_kanbane" model="ir.ui.view">
+            <field name="name">estate.property.kanban</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="property_type_id">
+                    <field name="state" invisible="1"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <strong><field name="name"/></strong>
+                                <div>Expected price: <field name="expected_price"/></div>
+                                <div t-if="record.state.raw_value == 'offer_r'">
+                                    Best offer: <field name="best_price"/>
+                                </div>
+                                <div t-if="record.state.raw_value == 'offer_a'">
+                                    Selling price: <field name="selling_price"/>
+                                </div>
+                                <div>
+                                    <field name="property_tag_id" widget="many2many_tags"/>
+                                </div>
+                                <div t-if="record.state.raw_value == 'sold'">
+                                    <strong>SOLD</strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+            </kanban>
+            </field>
         </record>
 
     </data>

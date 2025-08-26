@@ -16,6 +16,13 @@ class EstatePropertyType(models.Model):
     offer_ids = fields.One2many('estate.property.offers', 'property_type_id')
     offers_count = fields.Integer(compute="_compute_offer_count")
 
+    property_name = fields.Char(related="property_ids.name")
+    state = fields.Selection(related="property_ids.state")
+    expected_price = fields.Float(related="property_ids.expected_price")
+    selling_price = fields.Float(related="property_ids.selling_price")
+    best_price = fields.Float(related="property_ids.best_price")
+
+
     _sql_constraints = [
         ('name_uniq', 'unique (name)', 'Types of house must be unique'),
     ]
