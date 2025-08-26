@@ -2,14 +2,21 @@
 <odoo>
     <data>
 
-        <!-- Ação principal para tipos de propriedade -->
+        <!-- =====================================================
+             ACTION PRINCIPAL
+             Abre os tipos de propriedade (estate.property.type)
+             ===================================================== -->
         <record id="estate_types_action" model="ir.actions.act_window">
             <field name="name">Types</field>
             <field name="res_model">estate.property.type</field>
             <field name="view_mode">tree,form,kanban</field>
         </record>
 
-        <!-- Ação para ofertas filtradas -->
+        <!-- =====================================================
+             ACTION FILTRADA
+             Mostra apenas as ofertas ligadas ao tipo selecionado.
+             Usa domain para filtrar por property_type_id = active_id
+             ===================================================== -->
         <record id="estate_types_action_filtered" model="ir.actions.act_window">
             <field name="name">Types</field>
             <field name="res_model">estate.property.offers</field>
@@ -17,25 +24,39 @@
             <field name="domain">[('property_type_id', '=', active_id)]</field>
         </record>
 
-        <!-- Formulário de tipos de propriedade -->
+        <!-- =====================================================
+             VIEW FORM
+             Detalhes de um tipo de propriedade
+             - Inclui botão estatístico para ver ofertas
+             - Mostra propriedades relacionadas em tree inline
+             ===================================================== -->
         <record id="estate_property_type_view_form" model="ir.ui.view">
             <field name="name">estate.property.type.form</field>
             <field name="model">estate.property.type</field>
             <field name="arch" type="xml">
                 <form string="Propriedades">
+
+                    <!-- Caixa de botões no topo -->
                     <div class="oe_button_box" name="button_box">
+                        <!-- Botão estatístico (abre action filtrada) -->
                         <button name="%(estate.estate_types_action_filtered)d"
                                 type="action"
                                 class="oe_stat_button"
                                 icon="fa-pencil-square-o">
+                            <!-- Campos usados apenas internamente -->
                             <field name="offer_ids" invisible="1"/>
                             <field name="property_id" invisible="1"/>
+                            <!-- Contador exibido no botão -->
                             <field name="offers_count" widget="statinfo" string="Offers"/>
                         </button>
                     </div>
+
+                    <!-- Nome do tipo em destaque -->
                     <h1>
                         <field name="name"/>
                     </h1>
+
+                    <!-- Lista inline das propriedades desse tipo -->
                     <field name="property_ids">
                         <tree string="Types">
                             <field name="name"/>
@@ -47,7 +68,10 @@
             </field>
         </record>
 
-        <!-- Pesquisa para tipos de propriedade -->
+        <!-- =====================================================
+             VIEW SEARCH
+             Pesquisa por tipos de propriedade
+             ===================================================== -->
         <record id="view_delivery_carrier_search" model="ir.ui.view">
             <field name="name">estate.property.type.search</field>
             <field name="model">estate.property.type</field>
@@ -58,7 +82,11 @@
             </field>
         </record>
 
-        <!-- Lista de tipos de propriedade -->
+        <!-- =====================================================
+             VIEW TREE
+             Lista de tipos de propriedade
+             - Com suporte a reordenação via sequence
+             ===================================================== -->
         <record id="estate_property_view_tree_type" model="ir.ui.view">
             <field name="name">estate.property.type.tree</field>
             <field name="model">estate.property.type</field>
@@ -66,12 +94,12 @@
                 <tree string="Propriedades">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
+                    <!-- Campos extras comentados (se quiser ativar depois) -->
                     <!-- <field name="offers_ids"/> -->
                     <!-- <field name="offer_count"/> -->
                 </tree>
             </field>
         </record>
-
 
     </data>
 </odoo>

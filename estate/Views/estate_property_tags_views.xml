@@ -2,12 +2,21 @@
 <odoo>
     <data>
 
+        <!-- =====================================================
+             ACTION PRINCIPAL
+             Abre o modelo estate.property.tags
+             ===================================================== -->
         <record id="estate_tags_action" model="ir.actions.act_window">
             <field name="name">Tags</field>
             <field name="res_model">estate.property.tags</field>
-<!--            <field name="view_mode">tree,form</field>-->
+            <!-- view_mode pode ser definido aqui, mas está comentado -->
+            <!-- <field name="view_mode">tree,form</field> -->
         </record>
 
+        <!-- =====================================================
+             VIEW SEARCH
+             Permite pesquisar pelas tags de propriedade
+             ===================================================== -->
         <record id="view_delivery_carrier_search" model="ir.ui.view">
             <field name="name">estate.property.tags.search</field>
             <field name="model">estate.property.tags</field>
@@ -18,16 +27,21 @@
             </field>
         </record>
 
+        <!-- =====================================================
+             VIEW TREE
+             Lista simples de tags
+             - Editable="bottom": permite adicionar novas tags direto
+               no final da lista
+             ===================================================== -->
         <record id="estate_property_view_tree_tags" model="ir.ui.view">
-        <field name="name">estate.property.tags.tree</field>
-        <field name="model">estate.property.tags</field>
-        <field name="arch" type="xml">
-            <tree string="Propriedades" editable="bottom">
-                <field name="name"/>
-            </tree>
-        </field>
+            <field name="name">estate.property.tags.tree</field>
+            <field name="model">estate.property.tags</field>
+            <field name="arch" type="xml">
+                <tree string="Propriedades" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
         </record>
-
 
     </data>
 </odoo>
