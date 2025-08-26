@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Menu raiz -->
+    <menuitem id="estate_menu_root" name="Estate"/>
+
+    <!-- Submenu: Advertisements -->
+    <menuitem id="estate_advertisements_menu" name="Advertisements" parent="estate_menu_root"/>
+
+    <!-- Item: Properties (ação) -->
+    <menuitem id="estate_property_menuitem"
+              name="Properties"
+              parent="estate_advertisements_menu"
+              action="estate_property_action"/>
+
+    <!-- Submenu: Types -->
+    <menuitem id="estate_types_menu" name="Settings" parent="estate_menu_root"/>
+
+    <!-- Item: Type (ação) -->
+    <menuitem id="estate_types_menuitem"
+              name="Type"
+              parent="estate_types_menu"
+              action="estate_types_action"/>
+
+    <!-- Item: Type (ação) -->
+    <menuitem id="estate_tags_menuitem"
+              name="Tags"
+              parent="estate_types_menu"
+              action="estate_tags_action"/>
+
+       <!-- Item: Type (ação) -->
+    <menuitem id="estate_offers_menuitem"
+              name="Offers"
+              parent="estate_types_menu"
+              action="estate_offers_action"/>
+
+
+</odoo>
